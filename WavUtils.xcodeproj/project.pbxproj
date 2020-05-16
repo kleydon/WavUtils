@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A264306B247096A20000B46B /* TestWavUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A264305D247096A20000B46B /* TestWavUtils.cpp */; };
+		A264306C247096A20000B46B /* WavReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643061247096A20000B46B /* WavReader.cpp */; };
+		A264306D247096A20000B46B /* WavWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643064247096A20000B46B /* WavWriter.cpp */; };
+		A264306E247096A20000B46B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643066247096A20000B46B /* main.cpp */; };
+		A264306F247096A20000B46B /* Plot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643069247096A20000B46B /* Plot.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A2DD3891245F119C0098A144 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A264304D247096A20000B46B /* TestWavUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestWavUtils.hpp; sourceTree = "<group>"; };
+		A2643050247096A20000B46B /* wav2ch24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch24.wav; sourceTree = "<group>"; };
+		A2643051247096A20000B46B /* wav2ch32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch32.wav; sourceTree = "<group>"; };
+		A2643052247096A20000B46B /* wav1ch8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch8.wav; sourceTree = "<group>"; };
+		A2643053247096A20000B46B /* wav1ch32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch32.wav; sourceTree = "<group>"; };
+		A2643054247096A20000B46B /* wav1ch32f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch32f.wav; sourceTree = "<group>"; };
+		A2643055247096A20000B46B /* wav1ch24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch24.wav; sourceTree = "<group>"; };
+		A2643056247096A20000B46B /* wav1ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch16.wav; sourceTree = "<group>"; };
+		A2643057247096A20000B46B /* wav2ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch16.wav; sourceTree = "<group>"; };
+		A2643058247096A20000B46B /* wav2ch32f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch32f.wav; sourceTree = "<group>"; };
+		A2643059247096A20000B46B /* wav2ch64f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch64f.wav; sourceTree = "<group>"; };
+		A264305A247096A20000B46B /* wav2ch8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch8.wav; sourceTree = "<group>"; };
+		A264305C247096A20000B46B /* wav1ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch16.wav; sourceTree = "<group>"; };
+		A264305D247096A20000B46B /* TestWavUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestWavUtils.cpp; sourceTree = "<group>"; };
+		A2643060247096A20000B46B /* WavReader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavReader.hpp; sourceTree = "<group>"; };
+		A2643061247096A20000B46B /* WavReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavReader.cpp; sourceTree = "<group>"; };
+		A2643063247096A20000B46B /* WavWriter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavWriter.hpp; sourceTree = "<group>"; };
+		A2643064247096A20000B46B /* WavWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavWriter.cpp; sourceTree = "<group>"; };
+		A2643065247096A20000B46B /* WavHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavHeader.hpp; sourceTree = "<group>"; };
+		A2643066247096A20000B46B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A2643069247096A20000B46B /* Plot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plot.cpp; sourceTree = "<group>"; };
+		A264306A247096A20000B46B /* Plot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Plot.hpp; sourceTree = "<group>"; };
+		A2DD3893245F119C0098A144 /* WavUtils */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WavUtils; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A2DD3890245F119C0098A144 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A264304B247096A20000B46B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A2643066247096A20000B46B /* main.cpp */,
+				A264305E247096A20000B46B /* Classes */,
+				A264304C247096A20000B46B /* Test */,
+				A2643067247096A20000B46B /* Misc */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		A264304C247096A20000B46B /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				A264304D247096A20000B46B /* TestWavUtils.hpp */,
+				A264305D247096A20000B46B /* TestWavUtils.cpp */,
+				A264304E247096A20000B46B /* AudioSamples */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		A264304E247096A20000B46B /* AudioSamples */ = {
+			isa = PBXGroup;
+			children = (
+				A264304F247096A20000B46B /* Input */,
+				A264305B247096A20000B46B /* Output */,
+			);
+			path = AudioSamples;
+			sourceTree = "<group>";
+		};
+		A264304F247096A20000B46B /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				A2643050247096A20000B46B /* wav2ch24.wav */,
+				A2643051247096A20000B46B /* wav2ch32.wav */,
+				A2643052247096A20000B46B /* wav1ch8.wav */,
+				A2643053247096A20000B46B /* wav1ch32.wav */,
+				A2643054247096A20000B46B /* wav1ch32f.wav */,
+				A2643055247096A20000B46B /* wav1ch24.wav */,
+				A2643056247096A20000B46B /* wav1ch16.wav */,
+				A2643057247096A20000B46B /* wav2ch16.wav */,
+				A2643058247096A20000B46B /* wav2ch32f.wav */,
+				A2643059247096A20000B46B /* wav2ch64f.wav */,
+				A264305A247096A20000B46B /* wav2ch8.wav */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		A264305B247096A20000B46B /* Output */ = {
+			isa = PBXGroup;
+			children = (
+				A264305C247096A20000B46B /* wav1ch16.wav */,
+			);
+			path = Output;
+			sourceTree = "<group>";
+		};
+		A264305E247096A20000B46B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A2643065247096A20000B46B /* WavHeader.hpp */,
+				A264305F247096A20000B46B /* WavReader */,
+				A2643062247096A20000B46B /* WavWriter */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A264305F247096A20000B46B /* WavReader */ = {
+			isa = PBXGroup;
+			children = (
+				A2643060247096A20000B46B /* WavReader.hpp */,
+				A2643061247096A20000B46B /* WavReader.cpp */,
+			);
+			path = WavReader;
+			sourceTree = "<group>";
+		};
+		A2643062247096A20000B46B /* WavWriter */ = {
+			isa = PBXGroup;
+			children = (
+				A2643063247096A20000B46B /* WavWriter.hpp */,
+				A2643064247096A20000B46B /* WavWriter.cpp */,
+			);
+			path = WavWriter;
+			sourceTree = "<group>";
+		};
+		A2643067247096A20000B46B /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				A2643068247096A20000B46B /* Plotter */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		A2643068247096A20000B46B /* Plotter */ = {
+			isa = PBXGroup;
+			children = (
+				A2643069247096A20000B46B /* Plot.cpp */,
+				A264306A247096A20000B46B /* Plot.hpp */,
+			);
+			path = Plotter;
+			sourceTree = "<group>";
+		};
+		A2DD388A245F119C0098A144 = {
+			isa = PBXGroup;
+			children = (
+				A264304B247096A20000B46B /* Source */,
+				A2DD3894245F119C0098A144 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A2DD3894245F119C0098A144 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2DD3893245F119C0098A144 /* WavUtils */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A2DD3892245F119C0098A144 /* WavUtils */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtils" */;
+			buildPhases = (
+				A2DD388F245F119C0098A144 /* Sources */,
+				A2DD3890245F119C0098A144 /* Frameworks */,
+				A2DD3891245F119C0098A144 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WavUtils;
+			productName = WavUtils;
+			productReference = A2DD3893245F119C0098A144 /* WavUtils */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A2DD388B245F119C0098A144 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Krispin Leydon";
+				TargetAttributes = {
+					A2DD3892245F119C0098A144 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = A2DD388E245F119C0098A144 /* Build configuration list for PBXProject "WavUtils" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A2DD388A245F119C0098A144;
+			productRefGroup = A2DD3894245F119C0098A144 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A2DD3892245F119C0098A144 /* WavUtils */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A2DD388F245F119C0098A144 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A264306D247096A20000B46B /* WavWriter.cpp in Sources */,
+				A264306B247096A20000B46B /* TestWavUtils.cpp in Sources */,
+				A264306E247096A20000B46B /* main.cpp in Sources */,
+				A264306C247096A20000B46B /* WavReader.cpp in Sources */,
+				A264306F247096A20000B46B /* Plot.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A2DD3898245F119C0098A144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A2DD3899245F119C0098A144 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A2DD389B245F119C0098A144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QD6TTVM77K;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A2DD389C245F119C0098A144 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QD6TTVM77K;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A2DD388E245F119C0098A144 /* Build configuration list for PBXProject "WavUtils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2DD3898245F119C0098A144 /* Debug */,
+				A2DD3899245F119C0098A144 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2DD389B245F119C0098A144 /* Debug */,
+				A2DD389C245F119C0098A144 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A2DD388B245F119C0098A144 /* Project object */;
+}
