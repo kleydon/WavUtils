@@ -63,6 +63,9 @@ bool WavWriter::openFile() {
             return false;
         }
     }
+    else {
+        rewind(writeFile);
+    }
     
     return true;
 }
@@ -87,6 +90,66 @@ bool WavWriter::closeFile(const char* errorMessage) {
     }
     
     return true;
+}
+
+
+
+bool WavWriter::findSubchunk(const char* subchunkId) {
+    
+    if (!openFile()) {
+        return false;
+    }
+    
+    //Skip over RIFF header
+    if (fseek(writeFile, RIFF_HEADER_SIZE, SEEK_CUR)) {
+        closeFile("Error: Problem while skipping over RIFF header.\n");
+        return false;
+    }
+    
+    while (true) {
+
+        size_t numToRead = 1;
+        size_t numRead = 0;
+        uint8_t subchunkHeaderData[SUBCHUNK_HEADER_SIZE];
+        numRead = fread(subchunkHeaderData, SUBCHUNK_HEADER_SIZE, 1, writeFile);
+        if (numRead < numToRead) {
+            if (feof(writeFile)) {
+                fprintf(stderr, "Error: Reached end of file without finding subchunk: %s\n", subchunkId);
+                closeFile();
+                return false;
+            }
+            fprintf(stderr, "Error: Problem reading subchunk: %s\n", subchunkId);
+            closeFile();
+            return false;
+        }
+                
+        SubchunkHeader* sch = (SubchunkHeader*) subchunkHeaderData;
+        bool subchunkFound = !strncmp(sch->subchunkId, subchunkId, 4);
+        if (subchunkFound) {
+            //Rewind to the beginning of the subchunk, i.e. including the header
+            if (fseek(writeFile, -(int)SUBCHUNK_HEADER_SIZE, SEEK_CUR)) {
+                fprintf(stderr, "Error: Problem advancing to subchunk: %s\n", subchunkId);
+                closeFile();
+                return false;
+            }
+            return true;
+        }
+        
+        //Subchunk not found; advance to next subchunk
+        if (fseek(writeFile, sch->subchunkSize, SEEK_CUR)) {
+            if (feof(writeFile)) {
+                fprintf(stderr, "Error: End of file reached without finding subchunk: %s\n", subchunkId);
+                closeFile();
+                return false;
+            }
+            else {
+                closeFile("Error: Problem while advancing to the next subchunk");
+                return false;
+            }
+        }
+    }
+    
+    return false;
 }
 
 
@@ -125,11 +188,10 @@ bool WavWriter::startWriting() {
     rh->chunkId[1] = 'I';
     rh->chunkId[2] = 'F';
     rh->chunkId[3] = 'F';
-    rh->fileSizeLess8 =
-        4 + //End of riff header
-        FORMAT_SUBCHUNK_SIZE + //Format subchunk
-        ((samplesAreInts) ? 0 : FACT_SUBCHUNK_SIZE) + //Fact subchunk
-        (8 + (numSamples * numChannels * byteDepth)); //Data subchunk
+    rh->fileSizeLess8 = 4 + //End of riff header
+                        FORMAT_SUBCHUNK_SIZE + //Format subchunk
+                        ((samplesAreInts) ? 0 : FACT_SUBCHUNK_SIZE) + //Fact subchunk
+                        (8 + (numSamples * numChannels * byteDepth)); //Data subchunk - with numSamples planning to write
     //printf("fileSizeLess8:%d\n", rh->fileSizeLess8);
     rh->formatName[0] = 'W';
     rh->formatName[1] = 'A';
@@ -150,7 +212,7 @@ bool WavWriter::startWriting() {
     fsc->formatSubchunkId[1] = 'm';
     fsc->formatSubchunkId[2] = 't';
     fsc->formatSubchunkId[3] = ' ';
-    fsc->formatSubchunkSize = 16;  // ***** MAY BE DIFFERENT FOR FLOAT!!! *****
+    fsc->formatSubchunkSize = 16;
     fsc->audioFormat = (samplesAreInts) ? AUDIO_FORMAT_INT : AUDIO_FORMAT_FLOAT;
     fsc->numChannels = numChannels;
     fsc->sampleRate = sampleRate;
@@ -269,7 +331,57 @@ bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels int
 
 bool WavWriter::finishWriting() {
     
-    //Update file length, based on numSamplesWritten and numSamples
+    //Update:
+    // 1. file length in "RIFF" chunk
+    // 2. Subchunk length in data subchunk
+    //based on the number of samples actually written.
+    
+    if(!openFile()) {
+        return false;
+    }
+   
+    //Advance past "RIFF" chunk ID field
+    int numOffsetBytes = 4;
+    if (fseek(writeFile, numOffsetBytes, SEEK_CUR) != 0) {
+        closeFile("Error advancing to file size.");
+        return false;
+    }
+
+    //Update RIFF chunk's fileSizeLess8 field
+    uint32_t fileSizeLess8 = 4 + //End of riff header
+                             FORMAT_SUBCHUNK_SIZE + //Format subchunk
+                             ((samplesAreInts) ? 0 : FACT_SUBCHUNK_SIZE) + //Fact subchunk
+                             (8 + (numSamplesWritten * numChannels * byteDepth)); //Data subchunk - with numSamples actually written
+    uint8_t* bytes = (uint8_t *)(&fileSizeLess8);
+    size_t numBytesWritten = 0;
+    uint32_t numBytesToWrite = sizeof(uint32_t);
+    numBytesWritten = fwrite(bytes, 1, numBytesToWrite, writeFile);
+    if (numBytesWritten < numBytesToWrite) {
+        closeFile("Error: Unable to update riff chunk file length.");
+        return false;
+    }
+    
+    //Advance to data subchunk
+    if (!findSubchunk("data")) {
+        closeFile("Error: Data subchunk not found.");
+        return false;
+    }
+    
+    //Update data subchunk - specifically to update subchunkSize
+    uint8_t dataSubchunkHeader[SUBCHUNK_HEADER_SIZE];
+    SubchunkHeader* dsh = (SubchunkHeader*) dataSubchunkHeader;
+    dsh->subchunkId[0] = 'd';
+    dsh->subchunkId[1] = 'a';
+    dsh->subchunkId[2] = 't';
+    dsh->subchunkId[3] = 'a';
+    dsh->subchunkSize = (numSamplesWritten * numChannels * byteDepth);
+    numBytesToWrite = SUBCHUNK_HEADER_SIZE;
+    numBytesWritten = fwrite(dataSubchunkHeader, 1, numBytesToWrite, writeFile);
+    if (numBytesWritten < numBytesToWrite) {
+        perror ("Error updating data subchunk header");
+        closeFile("Error: Problem updating data subchunk header.");
+        return false;
+    }
     
     return (closeFile());
 }

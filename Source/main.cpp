@@ -11,16 +11,12 @@
 
 /*
  TO DO:
- 
-    Make a repo for this. (Locally, where to put it?)
- 
-    Writing: Rewind and update file length, based on what's known at the point of finishing the write.
- 
+
+    File path safety checks
+
     For both writing and reading, have a initialize() function that can return false - so that error checking can happen.
  
     For read: Make reading metadata implicit and private; perhaps in initialize().
-
-    File path safety checks
  
     Revisit sample rate value checks
  

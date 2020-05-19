@@ -60,6 +60,7 @@ class WavWriter {
         bool openFile();
         bool closeFile();
         bool closeFile(const char* errorMessage);
+        bool findSubchunk(const char* subchunkId);
     
         const char* writeFilePath;
         FILE* writeFile;

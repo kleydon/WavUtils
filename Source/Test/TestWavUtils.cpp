@@ -18,7 +18,7 @@ bool testWavReader(const char * inputSamplesDir) {
      
     printf("Testing WavReader...\n\n");
     
-    const char inputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public\ Git\ Repos/WavUtils/Source/Test/AudioSamples/Input/wav2ch24.wav";
+    const char inputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public-Git-Repos/WavUtils/Source/Test/AudioSamples/Input/wav2ch24.wav";
     
     printf("Input file path: %s\n", inputFilePath);
     
@@ -83,7 +83,7 @@ bool testWavWriter(const char * outputSamplesDir) {
     
      printf("Testing WavWriter...\n\n");
     
-    const char outputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public\ Git\ Repos/WavUtils/Source/Test/AudioSamples/Output/wav1ch16.wav";
+    const char outputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public-Git-Repos/WavUtils/Source/Test/AudioSamples/Output/wav1ch16.wav";
     uint32_t sampleRate = 44100;
     uint32_t numSamples = floor(44100 * 0.05);
     uint32_t numChannels = 1;
@@ -214,7 +214,7 @@ bool testWavWriter(const char * outputSamplesDir) {
 
     ww->startWriting();
         
-    ww->writeData(sampleData, sampleDataSize);
+    ww->writeData(sampleData, sampleDataSize/2);
     //ww->writeDataFromInt16s(int16Samples, numSamples);
 
     ww->finishWriting();
