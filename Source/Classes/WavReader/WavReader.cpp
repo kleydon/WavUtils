@@ -22,8 +22,7 @@ const uint32_t TWO_POW_16_AS_UINT32 = 65536;
 
 
 
-WavReader::WavReader(const char* readFilePath) {
-    init(readFilePath);
+WavReader::WavReader() {
 }
 
 
@@ -33,16 +32,22 @@ WavReader::~WavReader() {
 
 
 
-void WavReader::init(const char* readFilePath) {
+bool WavReader::initialize(const char* readFilePath) {
 
+    //Test for file existence...
+    FILE *f = fopen(readFilePath, "r");
+    if (!f) {
+        fprintf(stderr, "File: %s doesn't exist.\n", readFilePath);
+        return false;
+    }
+    fclose(f);
+
+    //Set member vars
     this->readFilePath = (char *) readFilePath;
     readFile = nullptr;
-
-    sampleRate = 44100;
-    numSamples = 0;
-    numChannels = 1;
-    samplesAreInts = true;
-    byteDepth = 1;
+    bool verifies = readMetadata(); //Sets remaining member variables
+    
+    return verifies;
 }
 
 
@@ -151,10 +156,9 @@ bool WavReader::findSubchunk(const char* subchunkId, uint32_t *subchunkSize) {
 
 
 bool WavReader::readMetadata() {
-    
-    printf("Reading metadata for file: %s\n", readFilePath);
-    
+        
     if (!openFile()) {
+        fprintf(stderr, "Error: Unable to open file to read metadata.\n");
         return false;
     }
     

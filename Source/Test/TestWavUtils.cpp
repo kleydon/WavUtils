@@ -18,17 +18,17 @@ bool testWavReader(const char * inputSamplesDir) {
      
     printf("Testing WavReader...\n\n");
     
-    const char inputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public-Git-Repos/WavUtils/Source/Test/AudioSamples/Input/wav2ch24.wav";
+    const char inputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public-Git-Repos/WavUtils/Source/Test/AudioSamples/Input/wav1ch8.wav";
+        
+    WavReader* wr = new WavReader();
     
-    printf("Input file path: %s\n", inputFilePath);
-    
-    WavReader* wr = new WavReader(inputFilePath);
-    
-    if (!wr->readMetadata()) {
-        exit(1);
+    if (!wr->initialize(inputFilePath)) {
+        fprintf(stderr, "Error: WavReader initialization failed; file may be corrupt.\n");
+        return false;
     }
-    
+        
     printf("Metadata:\n");
+    printf("   Input File Path: %s\n", wr->getReadFilePath());
     printf("   Sample Rate: %d\n", wr->getSampleRate());
     printf("   Number of Samples: %d\n", wr->getNumSamples());
     printf("   Number of Channels: %d\n", wr->getNumChannels());
@@ -195,12 +195,18 @@ bool testWavWriter(const char * outputSamplesDir) {
     //Test the writer
 
 
-    WavWriter* ww = new WavWriter(outputFilePath,
-                                  sampleRate,
-                                  numSamples,
-                                  numChannels,
-                                  samplesAreInts,
-                                  byteDepth);
+    WavWriter* ww = new WavWriter();
+
+    bool ok = ww->initialize(outputFilePath,
+                             sampleRate,
+                             numSamples,
+                             numChannels,
+                             samplesAreInts,
+                             byteDepth);
+    if (!ok) {
+        fprintf(stderr, "Error: Problem initializing WavWriter.\n");
+        return false;
+    }
 
     printf("Metadata Parameters:\n");
     printf("   Output File Path: %s\n", ww->getWriteFilePath());
@@ -214,7 +220,7 @@ bool testWavWriter(const char * outputSamplesDir) {
 
     ww->startWriting();
         
-    ww->writeData(sampleData, sampleDataSize/2);
+    ww->writeData(sampleData, sampleDataSize);
     //ww->writeDataFromInt16s(int16Samples, numSamples);
 
     ww->finishWriting();

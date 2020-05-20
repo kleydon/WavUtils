@@ -12,15 +12,15 @@
 /*
  TO DO:
 
-    File path safety checks
-
-    For both writing and reading, have a initialize() function that can return false - so that error checking can happen.
+    For writing: Is numSamples no longer necessary? Can it be removed?
  
-    For read: Make reading metadata implicit and private; perhaps in initialize().
+    Have checks for uninitialized usage...
  
     Revisit sample rate value checks
  
     Architect tests, and main...
+ 
+    Look at file includes...
  
  */
 
@@ -33,12 +33,12 @@ int main(int argc, const char * argv[]) {
 
 
     if (!testWavWriter(nullptr)) {
-        fputs("Error: testWavWriter() returned false.", stderr);
+        fputs("Error: testWavWriter() returned false.\n", stderr);
         return(1);
     }
     
     if(!testWavReader(nullptr)) {
-        fputs("Error: testWavWriter() returned false.", stderr);
+        fputs("Error: testWavWriter() returned false.\n", stderr);
         return(1);
     }
 

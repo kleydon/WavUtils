@@ -2,25 +2,14 @@
 
 
 #include <cstring> //memset()
+#include <stdio.h>
 
 
 #include "WavWriter.hpp"
 
 
 
-WavWriter::WavWriter(const char* writeFilePath,
-                     uint32_t sampleRate,
-                     uint32_t numSamples,
-                     uint32_t numChannels,
-                     bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
-                     uint32_t byteDepth) {
-    
-    init(writeFilePath,
-         sampleRate,
-         numSamples,
-         numChannels,
-         samplesAreInts, //False if samples are 32 or 64-bit floating point values
-         byteDepth);
+WavWriter::WavWriter() {
 }
 
 
@@ -30,25 +19,56 @@ WavWriter::~WavWriter() {
 
 
 
-void WavWriter::init(const char* writeFilePath,
-                     uint32_t sampleRate,
-                     uint32_t numSamples,
-                     uint32_t numChannels,
-                     bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
-                     uint32_t byteDepth) {
-        
-    // ****** ERROR CHECK ALL PARAMETERS BEFORE USING IN WRITE - BUT HOW TO NOT USE EXCEPTIONS? *******
-
+bool WavWriter::initialize(const char* writeFilePath,
+                           uint32_t sampleRate,
+                           uint32_t numSamples,
+                           uint32_t numChannels,
+                           bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
+                           uint32_t byteDepth) {
+       
+    //Validate writeFilePath
+    FILE* f = fopen(writeFilePath, "w+b");
+    if (!f) {
+        fprintf(stderr, "Error: Problem testing write-file path (during open).\n");
+        return false;
+    }
+    fclose(f);
+    f = nullptr;
+    if ( remove(writeFilePath) != 0 ) {
+        perror("Error: Problem testing write-file path (during removal)");
+        return false;
+    }
+    
+    //Validate number of channels
+    if (!(numChannels == 1 || numChannels == 2)) {
+        fprintf(stderr, "Error: Number of channels must be 1 or 2");
+        return false;
+    }
+    
+    //Validate sample rate
+    if (sampleRate < 8000) { // Other constraints?
+        fprintf(stderr, "Error: Unsupported sample rate.");
+        return false;
+    }
+    
+    //Validate byte depth + int/float combination
+    if ( !((samplesAreInts && (byteDepth == 1 || byteDepth == 2 || byteDepth == 3 || byteDepth == 4)) ||
+          (!samplesAreInts && (byteDepth == 4 || byteDepth == 8))) ) {
+        fprintf(stderr, "Error: Invalid bits-per-sample value, or invalid combination of bits-per-sample and number of channels.");
+        return false;
+    }
+    
+    //Set member variables
     this->writeFilePath = writeFilePath;
     this->writeFile = nullptr;
-    
     this->numSamplesWritten = 0;
-    
     this->numSamples = numSamples;
     this->sampleRate = sampleRate;
     this->numChannels = numChannels;
     this->samplesAreInts = samplesAreInts;
     this->byteDepth = byteDepth;
+    
+    return true;
 }
 
 
@@ -159,24 +179,7 @@ bool WavWriter::findSubchunk(const char* subchunkId) {
 
 
 bool WavWriter::startWriting() {
-        
-    if (!(numChannels == 1 || numChannels == 2)) {
-        closeFile("Error: Number of channels must be 1 or 2");
-        return false;
-    }
-    
-    if (sampleRate < 8000) { // Other constraints?
-        closeFile("Error: Unsupported sample rate.");
-        return false;
-    }
-    
-    if ( !((samplesAreInts && (byteDepth == 1 || byteDepth == 2 || byteDepth == 3 || byteDepth == 4)) ||
-          (!samplesAreInts && (byteDepth == 4 || byteDepth == 8))) ) {
-        closeFile("Error: Invalid bits-per-sample value, or invalid combination of bits-per-sample and number of channels.");
-        return false;
-    }
-    
-    
+            
     if (!openFile()) {
         return false;
     }

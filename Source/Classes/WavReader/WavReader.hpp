@@ -32,11 +32,11 @@ class WavReader {
     
     public:
     
-        WavReader(const char* writeFilePath);
+        WavReader();
         ~ WavReader();
     
-        bool readMetadata();
-        
+        bool initialize(const char* readFilePath);
+            
         bool prepareToRead();
     
         bool readData(uint8_t sampleData[], //WAV format bytes
@@ -65,8 +65,8 @@ class WavReader {
         
             
     private:
+        bool readMetadata();
     
-        void init(const char* readFilePath);
         bool openFile();
         bool closeFile();
         bool closeFile(const char* errorMessage);
