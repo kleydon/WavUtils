@@ -8,8 +8,12 @@
 #include "WavWriter.hpp"
 
 
+static const char* UNINITIALIZED_MSG = "Attempt to call WavWriter class method before calling initialize().\n";
+
+
 
 WavWriter::WavWriter() {
+    initialized = false;
 }
 
 
@@ -68,12 +72,19 @@ bool WavWriter::initialize(const char* writeFilePath,
     this->samplesAreInts = samplesAreInts;
     this->byteDepth = byteDepth;
     
+    this->initialized = true;
+    
     return true;
 }
 
 
 
 bool WavWriter::openFile() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (!writeFile) {
         writeFile = fopen(writeFilePath, "w+b");
@@ -93,12 +104,23 @@ bool WavWriter::openFile() {
 
 
 bool WavWriter::closeFile() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return closeFile(nullptr);
 }
 
 
 
 bool WavWriter::closeFile(const char* errorMessage) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (errorMessage) {
         fprintf(stderr, "%s\n", errorMessage);
@@ -115,6 +137,11 @@ bool WavWriter::closeFile(const char* errorMessage) {
 
 
 bool WavWriter::findSubchunk(const char* subchunkId) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (!openFile()) {
         return false;
@@ -179,6 +206,11 @@ bool WavWriter::findSubchunk(const char* subchunkId) {
 
 
 bool WavWriter::startWriting() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
             
     if (!openFile()) {
         return false;
@@ -274,6 +306,11 @@ bool WavWriter::startWriting() {
 bool WavWriter::writeData(const uint8_t sampleData[], //WAV format bytes
                           uint32_t sampleDataSize) {
     
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     //Requires that:
     // 1) File is open for writing
     // 2) Header has already been written
@@ -303,6 +340,11 @@ bool WavWriter::writeData(const uint8_t sampleData[], //WAV format bytes
 bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels interleaved; length = numInt16Samples * numChannels
                                     uint32_t numInt16Samples) {
  
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     //Error checking...
     int64_t numSamplesLeftToWrite = numSamples - numSamplesWritten;
     int64_t numSamplesThisWrite = numInt16Samples;
@@ -334,7 +376,12 @@ bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels int
 
 bool WavWriter::finishWriting() {
     
-    //Update:
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
+    //Need to update:
     // 1. file length in "RIFF" chunk
     // 2. Subchunk length in data subchunk
     //based on the number of samples actually written.
@@ -397,6 +444,11 @@ bool WavWriter::writeInt16SampleToArray(int16_t int16SampleCh1,
                                         const uint8_t sampleData[], //Wav format bytes; samples interleaved if multiple channels
                                         uint32_t sampleDataSize) {
 
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     uint8_t srcBytes[sizeof(int16_t)*numChannels];
     ((int16_t*)srcBytes)[0] = int16SampleCh1;
     if (numChannels == 2) {
@@ -416,42 +468,84 @@ bool WavWriter::writeInt16SampleToArray(int16_t int16SampleCh1,
 
 
 const char* WavWriter::getWriteFilePath() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return nullptr;
+    }
+    
     return writeFilePath;
 }
 
 
 
 uint32_t WavWriter::getSampleRate() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return sampleRate;
 }
 
 
 
 uint32_t WavWriter::getNumSamples() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return numSamples;
 }
 
 
 
 uint32_t WavWriter::getNumChannels() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return numChannels;
 }
 
 
 
 bool WavWriter::getSamplesAreInts() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return samplesAreInts;
 }
 
 
 
 uint32_t WavWriter::getByteDepth() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return byteDepth;
 }
 
 
 
 uint32_t WavWriter::getSampleDataSize() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return numSamples * byteDepth * numChannels;
 }
 

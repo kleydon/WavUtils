@@ -13,9 +13,8 @@
  TO DO:
 
     For writing: Is numSamples no longer necessary? Can it be removed?
- 
-    Have checks for uninitialized usage...
- 
+    In writing, and finishing writes: Verify that lengths are on sample block boundaries.
+  
     Revisit sample rate value checks
  
     Architect tests, and main...
@@ -31,7 +30,6 @@ int main(int argc, const char * argv[]) {
     
     printf("Wav Utils\n\n");
 
-
     if (!testWavWriter(nullptr)) {
         fputs("Error: testWavWriter() returned false.\n", stderr);
         return(1);
@@ -42,6 +40,5 @@ int main(int argc, const char * argv[]) {
         return(1);
     }
 
-    
     return 0;
 }

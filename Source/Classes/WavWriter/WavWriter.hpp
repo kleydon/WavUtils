@@ -65,6 +65,7 @@ class WavWriter {
         uint32_t numChannels;
         bool samplesAreInts; //False if samples are floating-point values, 32 or 64-bit
         uint32_t byteDepth; //Number of significant bytes required a single channel of a sample
+        bool initialized;
 };
 
 
