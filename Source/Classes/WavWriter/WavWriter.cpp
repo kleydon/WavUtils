@@ -4,11 +4,12 @@
 #include <cstring> //memset()
 #include <stdio.h>
 
-
 #include "WavWriter.hpp"
 
 
 static const char* UNINITIALIZED_MSG = "Attempt to call WavWriter class method before calling initialize().\n";
+
+static const uint64_t MAX_UINT32 = 4294967295;
 
 
 
@@ -255,7 +256,7 @@ bool WavWriter::startWriting() {
         return false;
     }
     
-    //"fact" subchunk, supposedly required for floating-point representation
+    //"fact" subchunk; supposedly required for floating-point representation
     //See: http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
     if (!samplesAreInts) {
         //Write fact chunk
@@ -304,6 +305,12 @@ bool WavWriter::writeData(const uint8_t sampleData[], //WAV format bytes
         return false;
     }
     
+    uint32_t sampleBlockSize = byteDepth * numChannels;
+    if (sampleDataSize % sampleBlockSize) {
+        fprintf(stderr, "Error: Sample data size doesn't divide evenly by sample block size.\n");
+        return false;
+    }
+    
     //Requires that:
     // 1) File is open for writing
     // 2) Header has already been written
@@ -311,9 +318,17 @@ bool WavWriter::writeData(const uint8_t sampleData[], //WAV format bytes
     
     size_t numBytesWritten = 0;
     numBytesWritten = fwrite(sampleData, 1, sampleDataSize, writeFile);
-    numSamplesWritten += numBytesWritten / (byteDepth * numChannels);
+    
+    uint64_t newNumSamplesWritten = (uint64_t)numSamplesWritten +
+                                    (uint64_t)(numBytesWritten / (byteDepth * numChannels));
+    if (newNumSamplesWritten > MAX_UINT32) {
+        closeFile("Error: Problem writing sample data - overflow.\n");
+        return false;
+    }
+    numSamplesWritten = (uint32_t)newNumSamplesWritten;
+    
     if (numBytesWritten < sampleDataSize) {
-        closeFile("Error: Problem writing sample data.");
+        closeFile("Error: Problem writing sample data.\n");
         return false;
     }
     
@@ -329,6 +344,7 @@ bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels int
         fprintf(stderr, "%s", UNINITIALIZED_MSG);
         return false;
     }
+    
          
     const uint32_t bufferSize = (numChannels * byteDepth);
     uint8_t buffer[bufferSize];
@@ -343,7 +359,11 @@ bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels int
                                 buffer,
                                 bufferSize);
                 
-        writeData(buffer, bufferSize);  // Updates numSamplesWritten
+        bool ok = writeData(buffer, bufferSize);  // Updates numSamplesWritten
+        if (!ok) {
+            fprintf(stderr, "Error: Problem while writing data.\n");
+            return false;
+        }
     }
     
     return true;

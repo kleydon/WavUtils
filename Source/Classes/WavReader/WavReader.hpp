@@ -10,24 +10,6 @@
 
 
 
-
-/*
-
- WavReader()
- 
- prepareToRead(filePath)
-
- readMetadata
- readData
- readInt16Samples
- 
- finishReading()
- 
-*/
-
-
-
-
 class WavReader {
     
     public:

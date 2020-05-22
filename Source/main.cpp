@@ -11,14 +11,8 @@
 
 /*
  TO DO:
-
-    In writing, and finishing writes: Verify that lengths are on sample block boundaries.
-
-    Check to ensure file size doesn't get out of hand
  
     Architect tests, and main...
- 
-    Look at file includes...
  
  */
 

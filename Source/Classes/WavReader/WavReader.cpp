@@ -2,7 +2,6 @@
 
 
 #include <cstring> //memset()
-//#include <stdio.h>
 # include <cstdlib>
 #include <cstdio>
 
@@ -20,7 +19,9 @@ static const double TWO_POW_15_LESS1_AS_FLOAT64 = 32768.0 - 1.0;
 
 static const uint32_t TWO_POW_16_AS_UINT32 = 65536;
 
+
 static const char* UNINITIALIZED_MSG = "Attempt to call WavReader class method before calling initialize().\n";
+
 
 
 WavReader::WavReader() {

@@ -3,6 +3,7 @@
 #ifndef __WAV_WRITER_HPP__
 #define __WAV_WRITER_HPP__
 
+
 #include <cstdio> //For FILE
 #include <cstdint> //For uint8_t, etc.
 

@@ -4,6 +4,7 @@
 #include <cstring> //memset()
 # include <cstdlib>
 #include <cstdio>
+#include <cmath>
 
 #include "TestWavUtils.hpp"
 
@@ -11,7 +12,7 @@
 #include "WavReader.hpp"
 #include "WavWriter.hpp"
 
-#include <cmath>
+
 
 
 bool testWavReader(const char * inputSamplesDir) {
@@ -86,7 +87,7 @@ bool testWavWriter(const char * outputSamplesDir) {
     const char outputFilePath[] = "/Users/krispin/Desktop/Krispins_Stuff/Projects/Public-Git-Repos/WavUtils/Source/Test/AudioSamples/Output/wav1ch16.wav";
     uint32_t sampleRate = 44100;
     uint32_t numSamples = floor(44100 * 0.05);
-    uint32_t numChannels = 1;
+    uint32_t numChannels = 2;
     bool samplesAreInts = true;
     uint32_t byteDepth = 2;
     
