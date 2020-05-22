@@ -199,7 +199,7 @@ bool testWavWriter(const char * outputSamplesDir) {
 
     bool ok = ww->initialize(outputFilePath,
                              sampleRate,
-                             numSamples,
+                           //  numSamples,
                              numChannels,
                              samplesAreInts,
                              byteDepth);
@@ -211,18 +211,18 @@ bool testWavWriter(const char * outputSamplesDir) {
     printf("Metadata Parameters:\n");
     printf("   Output File Path: %s\n", ww->getWriteFilePath());
     printf("   Sample Rate: %d\n", ww->getSampleRate());
-    printf("   Number of Samples: %d\n", ww->getNumSamples());
     printf("   Number of Channels: %d\n", ww->getNumChannels());
     printf("   Representation: %s\n", ww->getSamplesAreInts() ? "Integer" : "Floating Point" );
     printf("   Byte Depth: %d\n", ww->getByteDepth());
-    printf("   Sample Data Size: %d\n", ww->getSampleDataSize());
+    printf("   Number of Samples Written: %d\n", ww->getNumSamplesWritten());
+    printf("   Sample Data Written Size: %d\n", ww->getSampleDataWrittenSize());
     printf("\n\n");
 
     ww->startWriting();
         
     ww->writeData(sampleData, sampleDataSize);
-    //ww->writeDataFromInt16s(int16Samples, numSamples);
-
+    //ww->writeDataFromInt16s(int16Samples, numSamples);    
+    
     ww->finishWriting();
     
     return true;

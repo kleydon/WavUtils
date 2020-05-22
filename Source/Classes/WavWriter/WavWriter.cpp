@@ -25,7 +25,6 @@ WavWriter::~WavWriter() {
 
 bool WavWriter::initialize(const char* writeFilePath,
                            uint32_t sampleRate,
-                           uint32_t numSamples,
                            uint32_t numChannels,
                            bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
                            uint32_t byteDepth) {
@@ -65,14 +64,12 @@ bool WavWriter::initialize(const char* writeFilePath,
     //Set member variables
     this->writeFilePath = writeFilePath;
     this->writeFile = nullptr;
-    this->numSamplesWritten = 0;
-    this->numSamples = numSamples;
     this->sampleRate = sampleRate;
     this->numChannels = numChannels;
     this->samplesAreInts = samplesAreInts;
     this->byteDepth = byteDepth;
-    
     this->initialized = true;
+    this->numSamplesWritten = 0;
     
     return true;
 }
@@ -223,11 +220,7 @@ bool WavWriter::startWriting() {
     rh->chunkId[1] = 'I';
     rh->chunkId[2] = 'F';
     rh->chunkId[3] = 'F';
-    rh->fileSizeLess8 = 4 + //End of riff header
-                        FORMAT_SUBCHUNK_SIZE + //Format subchunk
-                        ((samplesAreInts) ? 0 : FACT_SUBCHUNK_SIZE) + //Fact subchunk
-                        (8 + (numSamples * numChannels * byteDepth)); //Data subchunk - with numSamples planning to write
-    //printf("fileSizeLess8:%d\n", rh->fileSizeLess8);
+    rh->fileSizeLess8 = 0; //Unknown at outset; filled upon completion
     rh->formatName[0] = 'W';
     rh->formatName[1] = 'A';
     rh->formatName[2] = 'V';
@@ -273,7 +266,7 @@ bool WavWriter::startWriting() {
         factsc->factSubchunkId[2] = 'c';
         factsc->factSubchunkId[3] = 't';
         factsc->factSubchunkSize = 4;
-        factsc->numSamplesPerChannel = numSamples;
+        factsc->numSamplesPerChannel = 0; //Unknown at outset; filled upon completion
         numToWrite = 1;
         numWritten = 0;
         numWritten = fwrite(factSubchunkData, FACT_SUBCHUNK_SIZE, 1, writeFile);
@@ -289,7 +282,7 @@ bool WavWriter::startWriting() {
     dsh->subchunkId[1] = 'a';
     dsh->subchunkId[2] = 't';
     dsh->subchunkId[3] = 'a';
-    dsh->subchunkSize = (numSamples * numChannels * byteDepth);
+    dsh->subchunkSize = 0; //Unknown at outset; filled upon completion
     numToWrite = 1;
     numWritten = 0;
     numWritten = fwrite(dataSubchunkHeader, SUBCHUNK_HEADER_SIZE, 1, writeFile);
@@ -316,14 +309,6 @@ bool WavWriter::writeData(const uint8_t sampleData[], //WAV format bytes
     // 2) Header has already been written
     // 3) File pointer is at the right location for writing data
     
-    //Error-checking...
-    int64_t numSamplesLeftToWrite = numSamples - numSamplesWritten;
-    int64_t numSamplesThisWrite = sampleDataSize / (numChannels * byteDepth);
-    if ( numSamplesLeftToWrite < numSamplesThisWrite ) {
-        closeFile("Error: Attempt to write too many samples.");
-        return false;
-    }
-    
     size_t numBytesWritten = 0;
     numBytesWritten = fwrite(sampleData, 1, sampleDataSize, writeFile);
     numSamplesWritten += numBytesWritten / (byteDepth * numChannels);
@@ -344,15 +329,7 @@ bool WavWriter::writeDataFromInt16s(const int16_t int16Samples[], //channels int
         fprintf(stderr, "%s", UNINITIALIZED_MSG);
         return false;
     }
-    
-    //Error checking...
-    int64_t numSamplesLeftToWrite = numSamples - numSamplesWritten;
-    int64_t numSamplesThisWrite = numInt16Samples;
-    if ( numSamplesLeftToWrite < numSamplesThisWrite ) {
-        closeFile("Error: Attempt to write too many samples.");
-        return false;
-    }
-     
+         
     const uint32_t bufferSize = (numChannels * byteDepth);
     uint8_t buffer[bufferSize];
     for (uint32_t i = 0; i < numInt16Samples; i++) {
@@ -411,6 +388,33 @@ bool WavWriter::finishWriting() {
         return false;
     }
     
+    //If floating-point samples...
+    if (!samplesAreInts) {
+        
+        //Advance to fact subchunk
+        if (!findSubchunk("fact")) {
+            closeFile("Error: Fact subchunk not found.");
+            return false;
+        }
+        
+        //Update fact chunk - specifically numSamplesPerChannel
+        uint8_t factSubchunkData[FACT_SUBCHUNK_SIZE];
+        FactSubchunk* factsc = (FactSubchunk*) factSubchunkData;
+        factsc->factSubchunkId[0] = 'f';
+        factsc->factSubchunkId[1] = 'a';
+        factsc->factSubchunkId[2] = 'c';
+        factsc->factSubchunkId[3] = 't';
+        factsc->factSubchunkSize = 4;
+        factsc->numSamplesPerChannel = numSamplesWritten;
+        numBytesToWrite = 1;
+        numBytesWritten = 0;
+        numBytesWritten = fwrite(factSubchunkData, FACT_SUBCHUNK_SIZE, 1, writeFile);
+        if (numBytesWritten < numBytesToWrite) {
+            closeFile("Error: Problem writing fact subchunk.");
+            return false;
+        }
+    }
+    
     //Advance to data subchunk
     if (!findSubchunk("data")) {
         closeFile("Error: Data subchunk not found.");
@@ -456,7 +460,7 @@ bool WavWriter::writeInt16SampleToArray(int16_t int16SampleCh1,
     }
     
     uint8_t* destBytes = (uint8_t *)(sampleData + (sampleIndex * numChannels * byteDepth));
-    memcpy(destBytes, srcBytes, sizeof(int16_t)*numChannels);
+    memcpy(destBytes, srcBytes, (sizeof(int16_t) * numChannels));
     
     return true;
 }
@@ -487,18 +491,6 @@ uint32_t WavWriter::getSampleRate() {
     }
     
     return sampleRate;
-}
-
-
-
-uint32_t WavWriter::getNumSamples() {
-    
-    if (!initialized) {
-        fprintf(stderr, "%s", UNINITIALIZED_MSG);
-        return false;
-    }
-    
-    return numSamples;
 }
 
 
@@ -539,14 +531,26 @@ uint32_t WavWriter::getByteDepth() {
 
 
 
-uint32_t WavWriter::getSampleDataSize() {
+uint32_t WavWriter::getNumSamplesWritten() {
     
     if (!initialized) {
         fprintf(stderr, "%s", UNINITIALIZED_MSG);
         return false;
     }
     
-    return numSamples * byteDepth * numChannels;
+    return numSamplesWritten;
+}
+
+
+
+uint32_t WavWriter::getSampleDataWrittenSize() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
+    return numSamplesWritten * byteDepth * numChannels;
 }
 
 

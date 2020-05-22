@@ -12,10 +12,9 @@
 /*
  TO DO:
 
-    For writing: Is numSamples no longer necessary? Can it be removed?
     In writing, and finishing writes: Verify that lengths are on sample block boundaries.
-  
-    Revisit sample rate value checks
+
+    Check to ensure file size doesn't get out of hand
  
     Architect tests, and main...
  

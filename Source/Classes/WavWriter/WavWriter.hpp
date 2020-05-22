@@ -19,7 +19,6 @@ class WavWriter {
     
         bool initialize(const char* writeFilePath,
                         uint32_t sampleRate,
-                        uint32_t numSamples,
                         uint32_t numChannels,
                         bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
                         uint32_t byteDepth); //Number of bytes required to represent the value of a single channel of a sample
@@ -43,11 +42,11 @@ class WavWriter {
     
         const char* getWriteFilePath();
         uint32_t getSampleRate();
-        uint32_t getNumSamples();
         uint32_t getNumChannels();
         bool getSamplesAreInts();
         uint32_t getByteDepth();
-        uint32_t getSampleDataSize();
+        uint32_t getNumSamplesWritten();
+        uint32_t getSampleDataWrittenSize();
              
     
     private:
@@ -60,12 +59,11 @@ class WavWriter {
         FILE* writeFile;
         
         uint32_t sampleRate;
-        uint32_t numSamples;
-        uint32_t numSamplesWritten;
         uint32_t numChannels;
         bool samplesAreInts; //False if samples are floating-point values, 32 or 64-bit
         uint32_t byteDepth; //Number of significant bytes required a single channel of a sample
         bool initialized;
+        uint32_t numSamplesWritten;
 };
 
 
