@@ -3,8 +3,9 @@
 Classes for reading and writing Wav files in C++.
 - Read or write incrementally (frame by frame), or all at once
 - Support for 8/16/24/32-bit int samples, or 32/64-bit float samples
-- Conversion from any of the formats above to/from 16-bit integer format
-- Little-Endian - i.e: iOS, Android NDK, Windows, and OSX (post-PowerPC)
+- Conversion to/from 16-bit int format, while reading or writing
+- In-Memory conversion to/from 16-bit int format
+- Little-Endian; supports iOS, Android NDK, Windows, and OSX (post-PowerPC)
 
 ## Usage
 
