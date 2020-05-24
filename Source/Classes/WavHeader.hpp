@@ -10,6 +10,7 @@
 // http://soundfile.sapp.org/doc/WaveFormat/
 // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
 // https://sites.google.com/site/musicgapi/technical-documents/wav-file-format#fact
+// https://www.recordingblogs.com/wiki/wave-file-format
 
 
 //Verify we have float32 and float64
