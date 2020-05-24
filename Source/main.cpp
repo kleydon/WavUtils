@@ -9,13 +9,14 @@
 
 int main(int argc, const char * argv[]) {
     
-    printf("\n\n~~~ WavUtilsTest ~~~\n\n");
+    printf("\n\n~~~ WavUtilsTest ~~~\n\n\n");
     
     if (argc != 3) {
-        printf("Usage: WavUtilsTest InputDir OutputDir\n");
-        printf("  InputDir: 'ReferenceAudio' directory, from this project\n");
-        printf("  OutputDir: A directory for writing output wav files\n");
-        printf("\n\n");
+        printf("Usage: WavUtilsTest InputDir OutputDir\n\n");
+        printf("  InputDir: Reference audio directory for this project,\n");
+        printf("            i.e: Source/Test/ReferenceAudio.\n\n");
+        printf("  OutputDir: A directory to write output wav files to\n");
+        printf("\n\n\n");
         exit(0);
     }
 
