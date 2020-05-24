@@ -8,8 +8,9 @@ Classes for reading and writing Wav files in C++.
 
 ## Usage
 
-### Basic Reading:
+### Read:
 ```
+:::C++
 #include "WavReader.hpp"
 
 WavReader* wr = new WavReader();
@@ -19,9 +20,10 @@ wr->readData(sampleData, wr->getSampleDataSize());
 wr->finishReading();
 ```
 
-### Basic Writing:
+### Write:
 
 ```
+:::C++
 #include "WavWriter.hpp"
 
 WavWriter* ww = new WavWriter();
@@ -34,8 +36,9 @@ ww->startWriting(); //Writes header
 ww->writeData(sampleData, sampleDataSize);
 ww->finishReading();
 ```
-### Incremental Reading & Writing:
+### Incrementally Read & Write:
 ```
+:::C++
 ...
 wr->readData(bufferA, bufferASize);
 wr->readData(bufferB, bufferBSize);
@@ -44,8 +47,9 @@ ww->writeData(bufferA, bufferASize);
 ww->writeData(bufferB, bufferBSize);
 ...
 ```
-### Conversion to/from Int16 Samples, while Reading & Writing
+### Conversion to/from Int16 Samples, during Read & Write
 ```
+:::C++
 ...
 wr->readDataToInt16s(int16Samples,
                     numInt16Samples);
@@ -57,6 +61,7 @@ ww->writeDataFromInt16s(int16Samples,
 
 ### In-Memory Conversion to/from Int16 Samples
 ```
+:::C++
 ...
 wr->readInt16SampleFromArray(sampleData,  // Wav-format "source" sample data array
                              sampleDataSize,
