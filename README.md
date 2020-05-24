@@ -11,10 +11,10 @@ Classes for reading and writing Wav files in C++.
 ### Read:
 ```C++
 #include "WavReader.hpp"
-
+...
 WavReader* wr = new WavReader();
 wr->initialize(inputWavFilePath);
-wr->prepareToRead();  // Metadata available after this point
+wr->prepareToRead();  // Metadata available after this
 wr->readData(sampleData, wr->getSampleDataSize());
 wr->finishReading();
 ```
@@ -23,7 +23,7 @@ wr->finishReading();
 
 ```C++
 #include "WavWriter.hpp"
-
+...
 WavWriter* ww = new WavWriter();
 ww->initialize(outputWavFilePath,
                sampleRate,
@@ -48,7 +48,7 @@ ww->writeData(bufferB, bufferBSize);
 ```C++
 ...
 wr->readDataToInt16s(int16Samples,
-                    numInt16Samples);
+                     numInt16Samples);
 
 ww->writeDataFromInt16s(int16Samples,
                         numInt16Samples);
