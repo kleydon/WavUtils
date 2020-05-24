@@ -83,19 +83,19 @@ bool WavReaderTester::runWavReaderTest() {
     printf("Running WavReaderTest.\n");
     
     //Reading files all at once
-    printf("    Reading files, all-at-once...\n");
+    printf("    Testing reading files, all-at-once...\n");
     for (int i=0; i<NUM_FILE_PARAM_SETS; i++) {
         testReadFileAllAtOnce(&inFileParamSets[i]);
     }
     
     //Read files incrementally
-    printf("    Reading files, incrementally...\n");
+    printf("    Testing reading files, incrementally...\n");
     for (int i=0; i<NUM_FILE_PARAM_SETS; i++) {
         testReadFileIncrementally(&inFileParamSets[i]);
     }
     
     //Read files from int16 sample arrays
-    printf("    Reading files from int16s...\n");
+    printf("    Testing reading files from int16s...\n");
     for (int i=0; i<NUM_FILE_PARAM_SETS; i++) {
         if (!testReadFileToInt16s(&inFileParamSets[i])) {
             fprintf(stderr, "runWavReaderTest(): Error test-reading file to int16s.\n");
@@ -131,7 +131,8 @@ bool WavReaderTester::testReadFileAllAtOnce(const InFileParamSetDef* ifps) {
     }
     
     //Allocate sampleData
-    uint32_t sampleDataSize = wavReader->getNumSamples() * wavReader->getNumChannels() * wavReader->getByteDepth();
+    
+    uint32_t sampleDataSize = wavReader->getSampleDataSize();
     if (sampleData) {
         free(sampleData);
         sampleData = nullptr;
