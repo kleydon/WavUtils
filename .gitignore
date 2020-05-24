@@ -34,10 +34,13 @@
 *.app
 
 
-## Apple, X-Code Specific
 
-# Apple
+## Apple / X-Code Specific
+
+
+## Apple
 .DS_Store
+
 
 # Xcode
 #

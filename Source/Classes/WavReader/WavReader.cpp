@@ -2,7 +2,6 @@
 
 
 #include <cstring> //memset()
-//#include <stdio.h>
 # include <cstdlib>
 #include <cstdio>
 
@@ -10,20 +9,23 @@
 
 
 
-const uint16_t TWO_POW_7_AS_UINT16 = 128;
+static const uint16_t TWO_POW_7_AS_UINT16 = 128;
 
-const uint16_t TWO_POW_8_AS_UINT16 = 256;
-const uint32_t TWO_POW_8_AS_UINT32 = 256;
+static const uint16_t TWO_POW_8_AS_UINT16 = 256;
+static const uint32_t TWO_POW_8_AS_UINT32 = 256;
 
-const float TWO_POW_15_LESS1_AS_FLOAT32 = 32768.0f - 1.0f;
-const double TWO_POW_15_LESS1_AS_FLOAT64 = 32768.0 - 1.0;
+static const float TWO_POW_15_LESS1_AS_FLOAT32 = 32768.0f - 1.0f;
+static const double TWO_POW_15_LESS1_AS_FLOAT64 = 32768.0 - 1.0;
 
-const uint32_t TWO_POW_16_AS_UINT32 = 65536;
+static const uint32_t TWO_POW_16_AS_UINT32 = 65536;
+
+
+static const char* UNINITIALIZED_MSG = "Attempt to call WavReader class method before calling initialize().\n";
 
 
 
-WavReader::WavReader(const char* readFilePath) {
-    init(readFilePath);
+WavReader::WavReader() {
+    initialized = false;
 }
 
 
@@ -33,21 +35,36 @@ WavReader::~WavReader() {
 
 
 
-void WavReader::init(const char* readFilePath) {
+bool WavReader::initialize(const char* readFilePath) {
+
+    //Test for file existence...
+    FILE *f = fopen(readFilePath, "r");
+    if (!f) {
+        fprintf(stderr, "File: %s doesn't exist.\n", readFilePath);
+        return false;
+    }
+    fclose(f);
+
+    //Set member vars
 
     this->readFilePath = (char *) readFilePath;
-    readFile = nullptr;
+    this->readFile = nullptr;
 
-    sampleRate = 44100;
-    numSamples = 0;
-    numChannels = 1;
-    samplesAreInts = true;
-    byteDepth = 1;
+    this->initialized = true; //Set *before* call to readMetadata()
+    bool verifies = readMetadata(); //Sets remaining member variables
+    this->initialized = verifies; //Update *after* call to readMetadata()
+    
+    return verifies;
 }
 
 
 
 bool WavReader::openFile() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (!readFile) {
         readFile = fopen(readFilePath, "rb");
@@ -67,12 +84,23 @@ bool WavReader::openFile() {
 
 
 bool WavReader::closeFile() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return closeFile(nullptr);
 }
 
 
 
 bool WavReader::closeFile(const char* errorMessage) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (errorMessage) {
         fprintf(stderr, "%s\n", errorMessage);
@@ -89,6 +117,11 @@ bool WavReader::closeFile(const char* errorMessage) {
 
 
 bool WavReader::findSubchunk(const char* subchunkId, uint32_t *subchunkSize) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (!openFile()) {
         return false;
@@ -152,9 +185,13 @@ bool WavReader::findSubchunk(const char* subchunkId, uint32_t *subchunkSize) {
 
 bool WavReader::readMetadata() {
     
-    printf("Reading metadata for file: %s\n", readFilePath);
-    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+        
     if (!openFile()) {
+        fprintf(stderr, "Error: Unable to open file to read metadata.\n");
         return false;
     }
     
@@ -219,7 +256,6 @@ bool WavReader::readMetadata() {
     }
     
     byteDepth = fsc->bitsPerSample / 8;
-    printf("byteDepth:%d samplesAreInts:%d\n", byteDepth, samplesAreInts);
     if ( !((samplesAreInts && (byteDepth == 1 || byteDepth == 2 || byteDepth == 3 || byteDepth == 4)) ||
           (!samplesAreInts && (byteDepth == 4 || byteDepth == 8))) ) {
         closeFile("Error: Invalid bits-per-sample value, or invalid combination of bits-per-sample and number of channels.");
@@ -249,6 +285,11 @@ bool WavReader::readMetadata() {
 
 bool WavReader::prepareToRead() {
     
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     //Open file
     if(!openFile()) {
         closeFile("Error: Unable to open file, while preparing to read data.");
@@ -276,6 +317,11 @@ bool WavReader::prepareToRead() {
 //Presumes a file opened for binary reading, with file pointer at first byte of sample data
 bool WavReader::readData(uint8_t sampleData[],
                          uint32_t sampleDataSize) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (this->sampleDataSize < sampleDataSize) {
         closeFile("Error: Suppled sampleDataSize larger than available data");
@@ -307,6 +353,11 @@ bool WavReader::readData(uint8_t sampleData[],
 //Presumes a file opened for binary reading, with file pointer at first byte of sample data
 bool WavReader::readDataToInt16s(int16_t int16Samples[], //channels interleaved; length = numInt16Samples * numChannels
                                  const uint32_t numInt16Samples) {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
 
     const uint32_t numBytesToRequest = numInt16Samples * numChannels * byteDepth;
     if (numBytesToRequest > sampleDataSize) {
@@ -325,9 +376,9 @@ bool WavReader::readDataToInt16s(int16_t int16Samples[], //channels interleaved;
                                  0, //sampleIndex
                                  sampleCh1,
                                  sampleCh2);
-        int16Samples[i] = sampleCh1;
+        int16Samples[i*numChannels] = sampleCh1;
         if (numChannels == 2) {
-            int16Samples[i+1] = sampleCh2;
+            int16Samples[i*numChannels+1] = sampleCh2;
         }
     }
     
@@ -337,6 +388,11 @@ bool WavReader::readDataToInt16s(int16_t int16Samples[], //channels interleaved;
 
 
 bool WavReader::finishReading() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
     
     if (readFile) {
         fclose(readFile);
@@ -355,6 +411,11 @@ bool WavReader::readInt16SampleFromArray(const uint8_t sampleData[],
                                          int16_t &int16SampleCh1,
                                          int16_t &int16SampleCh2) {
     
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     //Verify in bounds
     uint32_t sampleBlockSize = numChannels * byteDepth;
     if (sampleDataSize < ((sampleIndex + 1) * sampleBlockSize)) {
@@ -372,7 +433,7 @@ bool WavReader::readInt16SampleFromArray(const uint8_t sampleData[],
             //https://en.wikipedia.org/wiki/WAV
             int16SampleCh1 = ((int16_t)sampleData[sampleIndex] - TWO_POW_7_AS_UINT16) * TWO_POW_8_AS_UINT16;
             int16SampleCh2 = 0;
-            
+                        
             break;
         }
             
@@ -512,42 +573,84 @@ bool WavReader::readInt16SampleFromArray(const uint8_t sampleData[],
 
 
 const char* WavReader::getReadFilePath() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return nullptr;
+    }
+    
     return readFilePath;
 }
 
 
 
 uint32_t WavReader::getSampleRate() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return sampleRate;
 }
 
 
 
 uint32_t WavReader::getNumSamples() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return numSamples;
 }
 
 
 
 uint32_t WavReader::getNumChannels() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return numChannels;
 }
 
 
 
 bool WavReader::getSamplesAreInts() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return samplesAreInts;
 }
 
 
 
 uint32_t WavReader::getByteDepth() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return byteDepth;
 }
 
 
 
 uint32_t WavReader::getSampleDataSize() {
+    
+    if (!initialized) {
+        fprintf(stderr, "%s", UNINITIALIZED_MSG);
+        return false;
+    }
+    
     return sampleDataSize;
 }
 

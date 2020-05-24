@@ -10,33 +10,15 @@
 
 
 
-
-/*
-
- WavReader()
- 
- prepareToRead(filePath)
-
- readMetadata
- readData
- readInt16Samples
- 
- finishReading()
- 
-*/
-
-
-
-
 class WavReader {
     
     public:
     
-        WavReader(const char* writeFilePath);
+        WavReader();
         ~ WavReader();
     
-        bool readMetadata();
-        
+        bool initialize(const char* readFilePath);
+            
         bool prepareToRead();
     
         bool readData(uint8_t sampleData[], //WAV format bytes
@@ -65,8 +47,8 @@ class WavReader {
         
             
     private:
+        bool readMetadata();
     
-        void init(const char* readFilePath);
         bool openFile();
         bool closeFile();
         bool closeFile(const char* errorMessage);
@@ -83,6 +65,7 @@ class WavReader {
         bool samplesAreInts; //False if samples are 32 or 64-bit floating point values
         uint32_t byteDepth; //Number of significant bytes required to represent a single channel of a sample
         uint32_t sampleDataSize;
+        bool initialized;
 };
 
 

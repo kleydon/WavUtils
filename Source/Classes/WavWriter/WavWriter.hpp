@@ -3,6 +3,7 @@
 #ifndef __WAV_WRITER_HPP__
 #define __WAV_WRITER_HPP__
 
+
 #include <cstdio> //For FILE
 #include <cstdint> //For uint8_t, etc.
 
@@ -14,14 +15,14 @@ class WavWriter {
     
     public:
  
-        WavWriter(const char* writeFilePath,
-                  uint32_t sampleRate,
-                  uint32_t numSamples,
-                  uint32_t numChannels,
-                  bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
-                  uint32_t byteDepth); //Number of bytes required to represent the value of a single channel of a sample
-    
+        WavWriter(); //Number of bytes required to represent the value of a single channel of a sample
         ~WavWriter();
+    
+        bool initialize(const char* writeFilePath,
+                        uint32_t sampleRate,
+                        uint32_t numChannels,
+                        bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
+                        uint32_t byteDepth); //Number of bytes required to represent the value of a single channel of a sample
         
         bool startWriting();
 
@@ -42,34 +43,28 @@ class WavWriter {
     
         const char* getWriteFilePath();
         uint32_t getSampleRate();
-        uint32_t getNumSamples();
         uint32_t getNumChannels();
         bool getSamplesAreInts();
         uint32_t getByteDepth();
-        uint32_t getSampleDataSize();
+        uint32_t getNumSamplesWritten();
+        uint32_t getSampleDataWrittenSize();
              
     
     private:
-    
-        void init(const char* writeFilePath,
-                  uint32_t sampleRate,
-                  uint32_t numSamples,
-                  uint32_t numChannels,
-                  bool samplesAreInts, //False if samples are 32 or 64-bit floating point values
-                  uint32_t byteDepth); //Number of bytes required to represent the value of a single channel of a sample
         bool openFile();
         bool closeFile();
         bool closeFile(const char* errorMessage);
+        bool findSubchunk(const char* subchunkId);
     
         const char* writeFilePath;
         FILE* writeFile;
         
         uint32_t sampleRate;
-        uint32_t numSamples;
-        uint32_t numSamplesWritten;
         uint32_t numChannels;
         bool samplesAreInts; //False if samples are floating-point values, 32 or 64-bit
         uint32_t byteDepth; //Number of significant bytes required a single channel of a sample
+        bool initialized;
+        uint32_t numSamplesWritten;
 };
 
 

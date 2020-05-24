@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A2DD3892245F119C0098A144"
-               BuildableName = "WavUtils"
-               BlueprintName = "WavUtils"
+               BuildableName = "WavUtilsTest"
+               BlueprintName = "WavUtilsTest"
                ReferencedContainer = "container:WavUtils.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,18 +45,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A2DD3892245F119C0098A144"
-            BuildableName = "WavUtils"
-            BlueprintName = "WavUtils"
+            BuildableName = "WavUtilsTest"
+            BlueprintName = "WavUtilsTest"
             ReferencedContainer = "container:WavUtils.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -69,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A2DD3892245F119C0098A144"
-            BuildableName = "WavUtils"
-            BlueprintName = "WavUtils"
+            BuildableName = "WavUtilsTest"
+            BlueprintName = "WavUtilsTest"
             ReferencedContainer = "container:WavUtils.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
