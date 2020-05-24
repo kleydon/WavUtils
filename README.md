@@ -62,11 +62,11 @@ ww->writeDataFromInt16s(int16Samples,
 wr->readInt16SampleFromArray(sampleData,  // Wav-format "source" sample data array
                              sampleDataSize,
                              sampleIndex,  //Index of sample to be read
-                             int16SampleCh1,  // Sample's channel 1 value, as int16
-                             int16SampleCh2);  // Sample's channel 2 value (if available), as int16
+                             int16SampleCh1,  // Sample's channel-1 value, as int16
+                             int16SampleCh2);  // Sample's channel-2 value (if available), as int16
 ...
-ww->writeInt16SampleToArray(int16SampleCh1,  // Sample's channel 1 value, as int16
-                            int16SampleCh2,  // Sample's channel 2 value (if available), as int16
+ww->writeInt16SampleToArray(int16SampleCh1,  // Sample's channel-1 value, as int16
+                            int16SampleCh2,  // Sample's channel-2 value (if available), as int16
                             sampleIndex,  //Index of sample to be written
                             sampleData,  // Wav-format "target" sample data array
                             sampleDataSize);
