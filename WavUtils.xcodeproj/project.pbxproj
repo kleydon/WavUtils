@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A264306B247096A20000B46B /* TestWavUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A264305D247096A20000B46B /* TestWavUtils.cpp */; };
+		A237F88624778C4500AE9466 /* WavReaderTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A237F88424778C4500AE9466 /* WavReaderTester.cpp */; };
+		A237F88A24778CBE00AE9466 /* WavWriterTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A237F88824778CBE00AE9466 /* WavWriterTester.cpp */; };
+		A237F88D247791EB00AE9466 /* TestWavUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A237F88C247791EB00AE9466 /* TestWavUtils.cpp */; };
 		A264306C247096A20000B46B /* WavReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643061247096A20000B46B /* WavReader.cpp */; };
 		A264306D247096A20000B46B /* WavWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643064247096A20000B46B /* WavWriter.cpp */; };
 		A264306E247096A20000B46B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2643066247096A20000B46B /* main.cpp */; };
@@ -27,20 +29,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A264304D247096A20000B46B /* TestWavUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestWavUtils.hpp; sourceTree = "<group>"; };
-		A2643050247096A20000B46B /* wav2ch24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch24.wav; sourceTree = "<group>"; };
-		A2643051247096A20000B46B /* wav2ch32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch32.wav; sourceTree = "<group>"; };
-		A2643052247096A20000B46B /* wav1ch8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch8.wav; sourceTree = "<group>"; };
-		A2643053247096A20000B46B /* wav1ch32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch32.wav; sourceTree = "<group>"; };
-		A2643054247096A20000B46B /* wav1ch32f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch32f.wav; sourceTree = "<group>"; };
-		A2643055247096A20000B46B /* wav1ch24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch24.wav; sourceTree = "<group>"; };
-		A2643056247096A20000B46B /* wav1ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch16.wav; sourceTree = "<group>"; };
-		A2643057247096A20000B46B /* wav2ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch16.wav; sourceTree = "<group>"; };
-		A2643058247096A20000B46B /* wav2ch32f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch32f.wav; sourceTree = "<group>"; };
-		A2643059247096A20000B46B /* wav2ch64f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch64f.wav; sourceTree = "<group>"; };
-		A264305A247096A20000B46B /* wav2ch8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav2ch8.wav; sourceTree = "<group>"; };
-		A264305C247096A20000B46B /* wav1ch16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wav1ch16.wav; sourceTree = "<group>"; };
-		A264305D247096A20000B46B /* TestWavUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestWavUtils.cpp; sourceTree = "<group>"; };
+		A237F88424778C4500AE9466 /* WavReaderTester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavReaderTester.cpp; sourceTree = "<group>"; };
+		A237F88524778C4500AE9466 /* WavReaderTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavReaderTester.hpp; sourceTree = "<group>"; };
+		A237F88824778CBE00AE9466 /* WavWriterTester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavWriterTester.cpp; sourceTree = "<group>"; };
+		A237F88924778CBE00AE9466 /* WavWriterTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavWriterTester.hpp; sourceTree = "<group>"; };
+		A237F88B247791EB00AE9466 /* TestWavUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestWavUtils.hpp; sourceTree = "<group>"; };
+		A237F88C247791EB00AE9466 /* TestWavUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestWavUtils.cpp; sourceTree = "<group>"; };
+		A2643050247096A20000B46B /* 440HzSine2ChInt24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChInt24.wav; sourceTree = "<group>"; };
+		A2643051247096A20000B46B /* 440HzSine2ChInt32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChInt32.wav; sourceTree = "<group>"; };
+		A2643052247096A20000B46B /* 440HzSine1ChUInt8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChUInt8.wav; sourceTree = "<group>"; };
+		A2643053247096A20000B46B /* 440HzSine1ChInt32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChInt32.wav; sourceTree = "<group>"; };
+		A2643054247096A20000B46B /* 440HzSine1ChFloat32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChFloat32.wav; sourceTree = "<group>"; };
+		A2643055247096A20000B46B /* 440HzSine1ChInt24.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChInt24.wav; sourceTree = "<group>"; };
+		A2643056247096A20000B46B /* 440HzSine1ChInt16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChInt16.wav; sourceTree = "<group>"; };
+		A2643057247096A20000B46B /* 440HzSine2ChInt16.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChInt16.wav; sourceTree = "<group>"; };
+		A2643058247096A20000B46B /* 440HzSine2ChFloat32.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChFloat32.wav; sourceTree = "<group>"; };
+		A2643059247096A20000B46B /* 440HzSine2ChFloat64.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChFloat64.wav; sourceTree = "<group>"; };
+		A264305A247096A20000B46B /* 440HzSine2ChUInt8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine2ChUInt8.wav; sourceTree = "<group>"; };
 		A2643060247096A20000B46B /* WavReader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavReader.hpp; sourceTree = "<group>"; };
 		A2643061247096A20000B46B /* WavReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WavReader.cpp; sourceTree = "<group>"; };
 		A2643063247096A20000B46B /* WavWriter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WavWriter.hpp; sourceTree = "<group>"; };
@@ -49,7 +54,8 @@
 		A2643066247096A20000B46B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A2643069247096A20000B46B /* Plot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plot.cpp; sourceTree = "<group>"; };
 		A264306A247096A20000B46B /* Plot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Plot.hpp; sourceTree = "<group>"; };
-		A2DD3893245F119C0098A144 /* WavUtils */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WavUtils; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2DD3893245F119C0098A144 /* WavUtilsTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WavUtilsTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2F785FD2479A51800C1294A /* 440HzSine1ChFloat64.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 440HzSine1ChFloat64.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A237F88324778C4500AE9466 /* WavReaderTester */ = {
+			isa = PBXGroup;
+			children = (
+				A237F88524778C4500AE9466 /* WavReaderTester.hpp */,
+				A237F88424778C4500AE9466 /* WavReaderTester.cpp */,
+			);
+			path = WavReaderTester;
+			sourceTree = "<group>";
+		};
+		A237F88724778CBE00AE9466 /* WavWriterTester */ = {
+			isa = PBXGroup;
+			children = (
+				A237F88924778CBE00AE9466 /* WavWriterTester.hpp */,
+				A237F88824778CBE00AE9466 /* WavWriterTester.cpp */,
+			);
+			path = WavWriterTester;
+			sourceTree = "<group>";
+		};
 		A264304B247096A20000B46B /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,46 +101,32 @@
 		A264304C247096A20000B46B /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				A264304D247096A20000B46B /* TestWavUtils.hpp */,
-				A264305D247096A20000B46B /* TestWavUtils.cpp */,
-				A264304E247096A20000B46B /* AudioSamples */,
+				A237F88B247791EB00AE9466 /* TestWavUtils.hpp */,
+				A237F88C247791EB00AE9466 /* TestWavUtils.cpp */,
+				A237F88324778C4500AE9466 /* WavReaderTester */,
+				A237F88724778CBE00AE9466 /* WavWriterTester */,
+				A264304E247096A20000B46B /* ReferenceAudio */,
 			);
 			path = Test;
 			sourceTree = "<group>";
 		};
-		A264304E247096A20000B46B /* AudioSamples */ = {
+		A264304E247096A20000B46B /* ReferenceAudio */ = {
 			isa = PBXGroup;
 			children = (
-				A264304F247096A20000B46B /* Input */,
-				A264305B247096A20000B46B /* Output */,
+				A2643052247096A20000B46B /* 440HzSine1ChUInt8.wav */,
+				A264305A247096A20000B46B /* 440HzSine2ChUInt8.wav */,
+				A2643056247096A20000B46B /* 440HzSine1ChInt16.wav */,
+				A2643057247096A20000B46B /* 440HzSine2ChInt16.wav */,
+				A2643055247096A20000B46B /* 440HzSine1ChInt24.wav */,
+				A2643050247096A20000B46B /* 440HzSine2ChInt24.wav */,
+				A2643053247096A20000B46B /* 440HzSine1ChInt32.wav */,
+				A2643051247096A20000B46B /* 440HzSine2ChInt32.wav */,
+				A2643054247096A20000B46B /* 440HzSine1ChFloat32.wav */,
+				A2643058247096A20000B46B /* 440HzSine2ChFloat32.wav */,
+				A2F785FD2479A51800C1294A /* 440HzSine1ChFloat64.wav */,
+				A2643059247096A20000B46B /* 440HzSine2ChFloat64.wav */,
 			);
-			path = AudioSamples;
-			sourceTree = "<group>";
-		};
-		A264304F247096A20000B46B /* Input */ = {
-			isa = PBXGroup;
-			children = (
-				A2643050247096A20000B46B /* wav2ch24.wav */,
-				A2643051247096A20000B46B /* wav2ch32.wav */,
-				A2643052247096A20000B46B /* wav1ch8.wav */,
-				A2643053247096A20000B46B /* wav1ch32.wav */,
-				A2643054247096A20000B46B /* wav1ch32f.wav */,
-				A2643055247096A20000B46B /* wav1ch24.wav */,
-				A2643056247096A20000B46B /* wav1ch16.wav */,
-				A2643057247096A20000B46B /* wav2ch16.wav */,
-				A2643058247096A20000B46B /* wav2ch32f.wav */,
-				A2643059247096A20000B46B /* wav2ch64f.wav */,
-				A264305A247096A20000B46B /* wav2ch8.wav */,
-			);
-			path = Input;
-			sourceTree = "<group>";
-		};
-		A264305B247096A20000B46B /* Output */ = {
-			isa = PBXGroup;
-			children = (
-				A264305C247096A20000B46B /* wav1ch16.wav */,
-			);
-			path = Output;
+			path = ReferenceAudio;
 			sourceTree = "<group>";
 		};
 		A264305E247096A20000B46B /* Classes */ = {
@@ -175,7 +185,7 @@
 		A2DD3894245F119C0098A144 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A2DD3893245F119C0098A144 /* WavUtils */,
+				A2DD3893245F119C0098A144 /* WavUtilsTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,9 +193,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A2DD3892245F119C0098A144 /* WavUtils */ = {
+		A2DD3892245F119C0098A144 /* WavUtilsTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtils" */;
+			buildConfigurationList = A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtilsTest" */;
 			buildPhases = (
 				A2DD388F245F119C0098A144 /* Sources */,
 				A2DD3890245F119C0098A144 /* Frameworks */,
@@ -195,9 +205,9 @@
 			);
 			dependencies = (
 			);
-			name = WavUtils;
+			name = WavUtilsTest;
 			productName = WavUtils;
-			productReference = A2DD3893245F119C0098A144 /* WavUtils */;
+			productReference = A2DD3893245F119C0098A144 /* WavUtilsTest */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -227,7 +237,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A2DD3892245F119C0098A144 /* WavUtils */,
+				A2DD3892245F119C0098A144 /* WavUtilsTest */,
 			);
 		};
 /* End PBXProject section */
@@ -237,11 +247,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A237F88D247791EB00AE9466 /* TestWavUtils.cpp in Sources */,
 				A264306D247096A20000B46B /* WavWriter.cpp in Sources */,
-				A264306B247096A20000B46B /* TestWavUtils.cpp in Sources */,
+				A237F88A24778CBE00AE9466 /* WavWriterTester.cpp in Sources */,
 				A264306E247096A20000B46B /* main.cpp in Sources */,
 				A264306C247096A20000B46B /* WavReader.cpp in Sources */,
 				A264306F247096A20000B46B /* Plot.cpp in Sources */,
+				A237F88624778C4500AE9466 /* WavReaderTester.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtils" */ = {
+		A2DD389A245F119C0098A144 /* Build configuration list for PBXNativeTarget "WavUtilsTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2DD389B245F119C0098A144 /* Debug */,

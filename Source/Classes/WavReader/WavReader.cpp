@@ -256,7 +256,6 @@ bool WavReader::readMetadata() {
     }
     
     byteDepth = fsc->bitsPerSample / 8;
-    printf("byteDepth:%d samplesAreInts:%d\n", byteDepth, samplesAreInts);
     if ( !((samplesAreInts && (byteDepth == 1 || byteDepth == 2 || byteDepth == 3 || byteDepth == 4)) ||
           (!samplesAreInts && (byteDepth == 4 || byteDepth == 8))) ) {
         closeFile("Error: Invalid bits-per-sample value, or invalid combination of bits-per-sample and number of channels.");
@@ -377,9 +376,9 @@ bool WavReader::readDataToInt16s(int16_t int16Samples[], //channels interleaved;
                                  0, //sampleIndex
                                  sampleCh1,
                                  sampleCh2);
-        int16Samples[i] = sampleCh1;
+        int16Samples[i*numChannels] = sampleCh1;
         if (numChannels == 2) {
-            int16Samples[i+1] = sampleCh2;
+            int16Samples[i*numChannels+1] = sampleCh2;
         }
     }
     
@@ -434,7 +433,7 @@ bool WavReader::readInt16SampleFromArray(const uint8_t sampleData[],
             //https://en.wikipedia.org/wiki/WAV
             int16SampleCh1 = ((int16_t)sampleData[sampleIndex] - TWO_POW_7_AS_UINT16) * TWO_POW_8_AS_UINT16;
             int16SampleCh2 = 0;
-            
+                        
             break;
         }
             
