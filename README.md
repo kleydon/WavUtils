@@ -2,14 +2,14 @@
 
 Classes for reading and writing Wav files in C++.
 - Read or write incrementally, or all at once
-- Support for 8/16/24/32-bit integer samples, or 32/64-bit floating-point samples
+- Support for 8/16/24/32-bit int samples, or 32/64-bit float samples
 - Conversion from any of the formats above to/from 16-bit integer format
 - Little-Endian - i.e: iOS, Android NDK, Windows, and OSX (post-PowerPC)
 
 ## Usage
 
 ### Read:
-```C
+```C++
 #include "WavReader.hpp"
 
 WavReader* wr = new WavReader();
